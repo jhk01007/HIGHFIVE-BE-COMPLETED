@@ -11,9 +11,11 @@ import reactor.core.publisher.Mono;
 public class TestController {
 
     private final WebClient.Builder webClientBuilder;
+    private final KafkaProducer kafkaProducer;
 
     @GetMapping("/test-service")
     public String service1() {
+        kafkaProducer.send("test-service", "test-service");
         return "서비스 1에서 완성되는 고유한 작업 요청 응답";
     }
 

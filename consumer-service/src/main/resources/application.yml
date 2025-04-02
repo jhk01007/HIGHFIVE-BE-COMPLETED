@@ -1,6 +1,6 @@
 spring:
   application:
-    name: test-service
+    name: consumer-service
 eureka:
   client:
     register-with-eureka: true
@@ -12,7 +12,6 @@ eureka:
     prefer-ip-address: true
 server:
   port: 0
-
 
 management:
   metrics:
