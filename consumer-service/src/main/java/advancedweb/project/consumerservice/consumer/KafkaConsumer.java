@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-    @KafkaListener(topics = "example-catalog-topic")
+    @KafkaListener(topics = "test-service")
     public void updateQty(String kafkaMessage) {
         log.info("Kafka Message: ->" + kafkaMessage);
     }
