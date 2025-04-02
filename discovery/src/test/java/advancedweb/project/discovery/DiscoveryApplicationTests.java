@@ -1,10 +1,10 @@
-package advancedweb.project.eureka;
+package advancedweb.project.discovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EurekaApplicationTests {
+class DiscoveryApplicationTests {
 
     @Test
     void contextLoads() {

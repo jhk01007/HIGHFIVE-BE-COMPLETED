@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  eureka:
-    build: ./eureka
-    container_name: eureka
+  discovery:
+    build: ./discovery
+    container_name: discovery
     ports:
       - "8761:8761"
     networks:
@@ -15,7 +15,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - eureka
+      - discovery
     networks:
       - msa-net
 
@@ -25,7 +25,7 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - eureka
+      - discovery
       - kafka
     networks:
       - msa-net
@@ -37,7 +37,7 @@ services:
       - "8082:8082"
     depends_on:
       - kafka
-      - eureka
+      - discovery
     networks:
       - msa-net
 
