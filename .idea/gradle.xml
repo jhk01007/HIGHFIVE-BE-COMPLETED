@@ -40,6 +40,24 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/monitoring" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/monitoring" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/prompt-engine-service" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/prompt-engine-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/test-service" />
         <option name="gradleJvm" value="21 (2)" />
         <option name="modules">

@@ -6,6 +6,8 @@
     <file type="web" url="file://$PROJECT_DIR$/board-service" />
     <file type="web" url="file://$PROJECT_DIR$/consumer-service" />
     <file type="web" url="file://$PROJECT_DIR$/discovery" />
+    <file type="web" url="file://$PROJECT_DIR$/monitoring" />
+    <file type="web" url="file://$PROJECT_DIR$/prompt-engine-service" />
     <file type="web" url="file://$PROJECT_DIR$/test-service" />
     <file type="web" url="file://$PROJECT_DIR$/user-service" />
     <file type="web" url="file://$PROJECT_DIR$/welfare-service" />
