@@ -1,14 +1,6 @@
 spring:
   application:
-    name: user-service
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: ${DB_NAME}
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
-      authentication-database: admin
+    name: ai-engine-service
 
 eureka:
   client:
