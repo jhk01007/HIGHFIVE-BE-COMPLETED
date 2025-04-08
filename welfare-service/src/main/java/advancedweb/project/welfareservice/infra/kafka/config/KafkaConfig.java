@@ -1,4 +1,4 @@
-package advancedweb.project.userservice.infra.kafka.config;
+package advancedweb.project.welfareservice.infra.kafka.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
