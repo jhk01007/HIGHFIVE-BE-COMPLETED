@@ -22,11 +22,11 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/eureka" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/discovery" />
         <option name="gradleJvm" value="21 (2)" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/eureka" />
+            <option value="$PROJECT_DIR$/discovery" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -36,6 +36,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/test-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="gradleJvm" value="21 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>
       </GradleProjectSettings>
