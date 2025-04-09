@@ -21,3 +21,21 @@ management:
   metrics:
     enable:
       system.processor: false
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+  allowed-headers: "*"
+  max-age: 3600
+
+jwt:
+  key: ${JWT_KEY}
+  access:
+    expiration: ${ACCESS_EXP}
+  refresh:
+    expiration: ${REFRESH_EXP}
+
+exclude-auth-path-patterns:
+  paths:
+    - path-pattern: /health-check
+      method: GET
