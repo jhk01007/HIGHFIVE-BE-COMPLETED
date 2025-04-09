@@ -1,5 +1,6 @@
 package advancedweb.project.userservice.config.security;
 
+import advancedweb.project.userservice.config.exception.error.InvalidTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
