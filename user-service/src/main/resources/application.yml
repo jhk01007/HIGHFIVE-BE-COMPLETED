@@ -22,6 +22,18 @@ eureka:
 server:
   port: 0
 
+jwt:
+  key: ${JWT_KEY}
+  access:
+    expiration: ${ACCESS_EXP}
+  refresh:
+    expiration: ${REFRESH_EXP}
+
+exclude-auth-path-patterns:
+  paths:
+    - path-pattern: /api/users
+      method: POST
+
 management:
   metrics:
     enable:
