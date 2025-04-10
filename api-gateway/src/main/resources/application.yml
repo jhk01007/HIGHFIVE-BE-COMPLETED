@@ -8,7 +8,10 @@ spring:
           uri: lb://TEST-SERVICE
           predicates:
             - Path=/test-service/**
-
+        - id: user-service-route
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
 server:
   port: 8080
 
@@ -37,5 +40,5 @@ jwt:
 
 exclude-auth-path-patterns:
   paths:
-    - path-pattern: /health-check
-      method: GET
+    - path-pattern: /api/users
+      method: POST

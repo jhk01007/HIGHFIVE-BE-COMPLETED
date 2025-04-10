@@ -35,7 +35,7 @@ public class TokenProvider {
     private static final String ROLE_CLAIM = "role";
 
 
-    public String createAccessToken(Long id) {
+    public String createAccessToken(String id) {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -70,9 +70,9 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(new User(String.valueOf(claims.get(ID_CLAIM, Long.class)), "", authorities), token, authorities);
     }
 
-    public Optional<Long> getId(String token) {
+    public Optional<String> getId(String token) {
         try {
-            return Optional.ofNullable(getClaims(token).get(ID_CLAIM, Long.class));
+            return Optional.ofNullable(getClaims(token).get(ID_CLAIM, String.class));
         } catch (Exception e) {
             return Optional.empty();
         }

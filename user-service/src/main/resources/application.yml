@@ -31,8 +31,8 @@ jwt:
 
 exclude-auth-path-patterns:
   paths:
-    - path-pattern: /health-check
-      method: GET
+    - path-pattern: /api/users
+      method: POST
 
 management:
   metrics:

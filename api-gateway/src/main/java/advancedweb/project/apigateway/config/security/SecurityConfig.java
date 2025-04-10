@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
-                .csrf(csrf -> csrf.disable())
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -47,7 +47,7 @@ public class SecurityConfig {
                         }
                     });
 
-                    auth.anyExchange().authenticated();
+                    auth.anyExchange().permitAll();
                 })
                 .addFilterAt(new JwtAuthenticationFilter(tokenProvider, excludeAuthPathProperties), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();

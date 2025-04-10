@@ -34,8 +34,7 @@ public class JwtAuthenticationFilter implements WebFilter {
             ServerHttpRequest request = exchange.getRequest();
 
             if(isExcludedPath(request)) {
-                chain.filter(exchange);
-                return Mono.empty();
+                return chain.filter(exchange);
             }
 
             tokenProvider.getToken(request).ifPresentOrElse(token -> {
