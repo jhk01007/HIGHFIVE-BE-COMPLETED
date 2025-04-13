@@ -19,5 +19,4 @@ public class InternalAuthController {
     public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(userAuthUseCase.validateToken(token));
     }
-
 }
