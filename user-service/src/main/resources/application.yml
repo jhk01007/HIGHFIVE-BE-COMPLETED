@@ -35,6 +35,8 @@ exclude-auth-path-patterns:
       method: POST
     - path-pattern: /api/users/login
       method: POST
+    - path-pattern: /api/users/validate
+      method: GET
 
 management:
   metrics:

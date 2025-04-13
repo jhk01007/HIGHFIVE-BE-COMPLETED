@@ -12,6 +12,10 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/users/**
+        - id: welfare-service-route
+          uri: lb://WELFARE-SERVICE
+          predicates:
+            - Path=/api/welfare/**
 server:
   port: 8080
 
@@ -44,3 +48,5 @@ exclude-auth-path-patterns:
       method: POST
     - path-pattern: /api/users/login
       method: POST
+    - path-pattern: /api/welfare/kafka-test
+      method: GET

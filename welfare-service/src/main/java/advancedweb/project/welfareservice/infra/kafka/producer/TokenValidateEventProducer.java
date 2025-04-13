@@ -1,5 +1,6 @@
 package advancedweb.project.welfareservice.infra.kafka.producer;
 
+import advancedweb.project.welfareservice.global.exception.error.KafkaMessageException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,15 +23,14 @@ public class TokenValidateEventProducer {
     public boolean send(String topic, String token) {
         try {
             Message message = Message.create(token);
+            String jsonMessage = objectMapper.writeValueAsString(message);
 
-            String jsonMessage = null;
-                jsonMessage = objectMapper.writeValueAsString(message);
             kafkaTemplate.send(topic, jsonMessage);
             log.info("message sent: {}", jsonMessage);
-
             return true;
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new KafkaMessageException();
         }
     }
 }
@@ -39,9 +40,11 @@ public class TokenValidateEventProducer {
  *  Event Class
  */
 
+@Data
 @Builder
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-class Metadata {
+@NoArgsConstructor
+@AllArgsConstructor
+class Metadata implements Serializable {
 
     private String eventNo;
     private String eventType;
@@ -58,9 +61,11 @@ class Metadata {
     }
 }
 
+@Data
 @Builder
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-class Payload {
+@NoArgsConstructor
+@AllArgsConstructor
+class Payload implements Serializable {
 
     private String token;
 
@@ -73,8 +78,9 @@ class Payload {
 
 @Data
 @Builder
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-class Message {
+@NoArgsConstructor
+@AllArgsConstructor
+class Message implements Serializable {
 
     private Metadata metadata;
     private Payload payload;

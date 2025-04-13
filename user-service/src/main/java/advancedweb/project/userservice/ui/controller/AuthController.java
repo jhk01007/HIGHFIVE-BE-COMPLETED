@@ -6,10 +6,7 @@ import advancedweb.project.userservice.application.dto.response.AuthRes;
 import advancedweb.project.userservice.application.usecase.UserAuthUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,4 +30,5 @@ public class AuthController {
     public ResponseEntity<AuthRes> login(@RequestBody LoginReq request) {
         return ResponseEntity.ok(userAuthUseCase.login(request));
     }
+
 }

@@ -4,6 +4,7 @@ import advancedweb.project.userservice.application.dto.request.LoginReq;
 import advancedweb.project.userservice.application.dto.request.SignUpReq;
 import advancedweb.project.userservice.application.dto.response.AuthRes;
 import advancedweb.project.userservice.config.exception.error.ExistsUsernameException;
+import advancedweb.project.userservice.config.exception.error.InvalidTokenException;
 import advancedweb.project.userservice.config.security.TokenProvider;
 import advancedweb.project.userservice.domain.entity.User;
 import advancedweb.project.userservice.domain.service.UserService;
@@ -31,6 +32,14 @@ public class UserAuthUseCase {
     public AuthRes login(LoginReq request) {
         User user = userService.findByLoginReq(request);
         return new AuthRes(tokenProvider.createAccessToken(user.getUserNo()));
+    }
+
+    public String validateToken(String token) {
+        if (!tokenProvider.validateToken(token))
+            throw new InvalidTokenException();
+
+        return tokenProvider.getId(token)
+                .orElseThrow(InvalidTokenException::new);
     }
 
 
