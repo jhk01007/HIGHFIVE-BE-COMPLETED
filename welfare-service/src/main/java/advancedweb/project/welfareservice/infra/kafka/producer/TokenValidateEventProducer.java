@@ -1,6 +1,6 @@
 package advancedweb.project.welfareservice.infra.kafka.producer;
 
-import advancedweb.project.welfareservice.global.exception.error.KafkaMessageException;
+import advancedweb.project.welfareservice.global.exception.RestApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static advancedweb.project.welfareservice.global.exception.code.status.GlobalErrorStatus._KAFKA_SERVER_ERROR;
 
 @Slf4j
 @Service
@@ -30,7 +32,7 @@ public class TokenValidateEventProducer {
             return true;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new KafkaMessageException();
+            throw new RestApiException(_KAFKA_SERVER_ERROR);
         }
     }
 }

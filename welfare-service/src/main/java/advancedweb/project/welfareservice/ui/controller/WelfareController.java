@@ -1,5 +1,6 @@
 package advancedweb.project.welfareservice.ui.controller;
 
+import advancedweb.project.welfareservice.global.response.BaseResponse;
 import advancedweb.project.welfareservice.infra.client.AuthFeignClient;
 import advancedweb.project.welfareservice.infra.kafka.producer.TokenValidateEventProducer;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,8 @@ public class WelfareController {
     private final AuthFeignClient authFeignClient;
 
     @GetMapping("/kafka-test")
-    public ResponseEntity<String> kafkaTest(@RequestHeader("Authorization") String token) {
-        return authFeignClient.validateToken(token);
+    public BaseResponse<String> kafkaTest(@RequestHeader("Authorization") String token) {
+        return BaseResponse.onSuccess(authFeignClient.validateToken(token));
 //        return ResponseEntity.ok(tokenValidateEventProducer.send("welfare.token-validate", "accessToken"));
     }
 }
