@@ -3,17 +3,17 @@ package advancedweb.project.userservice.application.usecase;
 import advancedweb.project.userservice.application.dto.request.LoginReq;
 import advancedweb.project.userservice.application.dto.request.SignUpReq;
 import advancedweb.project.userservice.application.dto.response.AuthRes;
-import advancedweb.project.userservice.config.exception.RestApiException;
-import advancedweb.project.userservice.config.security.TokenProvider;
+import advancedweb.project.userservice.global.exception.RestApiException;
+import advancedweb.project.userservice.global.config.security.TokenProvider;
 import advancedweb.project.userservice.domain.entity.User;
 import advancedweb.project.userservice.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static advancedweb.project.userservice.config.exception.code.status.AuthErrorStatus.INVALID_ACCESS_TOKEN;
-import static advancedweb.project.userservice.config.exception.code.status.AuthErrorStatus.INVALID_ID_TOKEN;
-import static advancedweb.project.userservice.config.exception.code.status.GlobalErrorStatus._EXIST_USERNAME;
+import static advancedweb.project.userservice.global.exception.code.status.AuthErrorStatus.INVALID_ACCESS_TOKEN;
+import static advancedweb.project.userservice.global.exception.code.status.AuthErrorStatus.INVALID_ID_TOKEN;
+import static advancedweb.project.userservice.global.exception.code.status.GlobalErrorStatus._EXIST_USERNAME;
 
 @Service
 @RequiredArgsConstructor

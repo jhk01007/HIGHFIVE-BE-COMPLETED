@@ -15,8 +15,9 @@ public class InternalAuthController {
 
     private final UserAuthUseCase userAuthUseCase;
 
+    // TODO: Internal API 경로 수정
     @GetMapping("/validate")
-    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(userAuthUseCase.validateToken(token));
+    public String validateToken(@RequestHeader("Authorization") String token) {
+        return userAuthUseCase.validateToken(token);
     }
 }
