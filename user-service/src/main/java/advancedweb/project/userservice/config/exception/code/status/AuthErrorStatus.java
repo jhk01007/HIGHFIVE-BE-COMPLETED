@@ -1,7 +1,7 @@
-package advancedweb.project.welfareservice.global.exception.code.status;
+package advancedweb.project.userservice.config.exception.code.status;
 
-import advancedweb.project.welfareservice.global.exception.code.BaseCodeDto;
-import advancedweb.project.welfareservice.global.exception.code.BaseCodeInterface;
+import advancedweb.project.userservice.config.exception.code.BaseCodeDto;
+import advancedweb.project.userservice.config.exception.code.BaseCodeInterface;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

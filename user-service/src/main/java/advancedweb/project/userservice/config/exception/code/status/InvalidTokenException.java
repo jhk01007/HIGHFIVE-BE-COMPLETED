@@ -1,4 +1,4 @@
-package advancedweb.project.userservice.config.exception.error;
+package advancedweb.project.userservice.config.exception.code.status;
 
 public class InvalidTokenException extends RuntimeException {
     public InvalidTokenException() {

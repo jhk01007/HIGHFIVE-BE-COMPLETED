@@ -1,6 +1,6 @@
 package advancedweb.project.userservice.config.security;
 
-import advancedweb.project.userservice.config.exception.error.InvalidTokenException;
+import advancedweb.project.userservice.config.exception.code.status.InvalidTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,12 +36,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (tokenProvider.validateToken(token))
                     setAuthentication(token);
                 else throw new InvalidTokenException();
-            },()-> {throw new InvalidTokenException();});
+            },()-> {
+                throw new InvalidTokenException();
+            });
 
             filterChain.doFilter(request, response);
         } catch (InvalidTokenException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json;charset=UTF-8");
+
+            String jsonResponse = String.format("{\"message\": \"%s\"}", e.getMessage());
+
             PrintWriter writer = response.getWriter();
+            writer.write(jsonResponse);
             writer.flush();
             writer.close();
         }

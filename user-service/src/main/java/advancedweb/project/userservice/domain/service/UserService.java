@@ -2,12 +2,13 @@ package advancedweb.project.userservice.domain.service;
 
 import advancedweb.project.userservice.application.dto.request.LoginReq;
 import advancedweb.project.userservice.application.dto.request.SignUpReq;
-import advancedweb.project.userservice.application.dto.response.ProfileRes;
-import advancedweb.project.userservice.config.exception.error.EmptyEntityException;
+import advancedweb.project.userservice.config.exception.RestApiException;
 import advancedweb.project.userservice.domain.entity.User;
 import advancedweb.project.userservice.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static advancedweb.project.userservice.config.exception.code.status.GlobalErrorStatus._EXIST_ENTITY;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class UserService {
 
     public User findByLoginReq(LoginReq request) {
         return userRepository.findByUsernameAndPassword(request.username(), request.password())
-                .orElseThrow(EmptyEntityException::new);
+                .orElseThrow(() -> new RestApiException(_EXIST_ENTITY));
     }
 
 }
