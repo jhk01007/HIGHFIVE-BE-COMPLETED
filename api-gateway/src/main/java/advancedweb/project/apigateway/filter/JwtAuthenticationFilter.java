@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter implements WebFilter {
             ServerHttpResponse response = exchange.getResponse();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
 
-            String body = "{\"message\": \"Invalid or expired token.\"}";
+            String body = "{\"message\": \"" + e.getMessage() + "\"}";
             DataBuffer buffer = response.bufferFactory()
                     .wrap(body.getBytes(StandardCharsets.UTF_8));
             response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
