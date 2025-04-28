@@ -11,10 +11,4 @@ import org.springframework.stereotype.Component;
 public class JwtProperties {
     @Value("${jwt.key}")
     private String key;
-
-    @Value("${jwt.access.expiration}")
-    private Long accessTokenExpirationPeriodDay;
-
-    @Value("${jwt.refresh.expiration}")
-    private Long refreshTokenExpirationPeriodMonth;
 }
