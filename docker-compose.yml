@@ -40,6 +40,30 @@ services:
     env_file:
       - ./user-service/.env
 
+  board-service:
+    build: ./board-service
+    container_name: board-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - api-gateway
+    networks:
+      - msa-net
+    env_file:
+      - ./board-service/.env
+
+  welfare-service:
+    build: ./welfare-service
+    container_name: welfare-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - api-gateway
+    networks:
+      - msa-net
+    env_file:
+      - ./welfare-service/.env
+
   zookeeper:
     image: bitnami/zookeeper:latest
     container_name: zookeeper

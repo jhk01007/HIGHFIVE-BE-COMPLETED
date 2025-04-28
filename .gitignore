@@ -1,0 +1,4 @@
+/api-gateway/.env
+/board-service/.env
+/user-service/.env
+/welfare-service/.env
