@@ -18,10 +18,11 @@ services:
     build: ./api-gateway
     container_name: api-gateway
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on:
-      discovery:
-        condition: service_healthy
+      - discovery
+#      discovery:
+#        condition: service_healthy
     networks:
       - msa-net
     env_file:
@@ -57,7 +58,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     depends_on:
