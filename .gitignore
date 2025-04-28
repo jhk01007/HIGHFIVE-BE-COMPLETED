@@ -1,4 +1,7 @@
+/ai-engine-service/.env
 /api-gateway/.env
 /board-service/.env
+/discovery/.env
+/monitoring/.env
 /user-service/.env
 /welfare-service/.env
