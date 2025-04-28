@@ -64,6 +64,30 @@ services:
     env_file:
       - ./welfare-service/.env
 
+  ai-engine-service:
+    build: ./ai-engine-service
+    container_name: ai-engine-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - api-gateway
+    networks:
+      - msa-net
+    env_file:
+      - ./ai-engine-service/.env
+
+  monitoring:
+    build: ./monitoring
+    container_name: monitoring
+    ports:
+      - "8085:8085"
+    depends_on:
+      - api-gateway
+    networks:
+      - msa-net
+    env_file:
+      - ./monitoring/.env
+
   zookeeper:
     image: bitnami/zookeeper:latest
     container_name: zookeeper
