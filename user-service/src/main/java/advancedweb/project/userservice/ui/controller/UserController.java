@@ -19,8 +19,9 @@ public class UserController {
 
     /**
      * 인적사항 작성 API
+     * 내 정보로 입력한 나의 나이 및 지역 수정
      */
-    public ResponseEntity<ProfileRes> saveProfile(@RequestBody ProfileReq request) {
+    public ResponseEntity<ProfileRes> updateProfile(@RequestBody ProfileReq request) {
         return ResponseEntity.ok(userInfoUseCase.saveProfile());
     }
 }

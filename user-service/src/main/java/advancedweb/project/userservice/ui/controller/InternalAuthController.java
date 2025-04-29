@@ -17,7 +17,7 @@ public class InternalAuthController {
 
     // TODO: Internal API 경로 수정
     @GetMapping("/validate")
-    public String validateToken(@RequestHeader("Authorization") String token) {
+    public Boolean validateToken(@RequestHeader("Authorization") String token) {
         return userAuthUseCase.validateToken(token);
     }
 }

@@ -12,5 +12,6 @@ public class Welfare {
     private String detail;      // 복지 서비스 설명
     private String fileNo;      // 복지 서비스 파일 PK
     private WelfareType welfareType; // 복지 서비스 종류
+    private Integer readCnt;    // 조회 수
     // todo: 복지 서비스 메타데이터 조사
 }
