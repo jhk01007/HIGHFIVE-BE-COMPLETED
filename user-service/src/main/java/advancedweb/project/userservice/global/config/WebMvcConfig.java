@@ -1,7 +1,7 @@
-package advancedweb.project.boardservice.global.config;
+package advancedweb.project.userservice.global.config;
 
-import advancedweb.project.boardservice.global.resolver.CurrentUserArgumentResolver;
-import advancedweb.project.boardservice.global.security.TokenProvider;
+import advancedweb.project.userservice.global.config.security.TokenProvider;
+import advancedweb.project.userservice.global.resolver.CurrentUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
