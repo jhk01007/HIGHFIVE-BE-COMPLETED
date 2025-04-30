@@ -1,5 +1,6 @@
 package advancedweb.project.welfareservice.ui.controller;
 
+import advancedweb.project.welfareservice.global.annotation.CheckAuthorization;
 import advancedweb.project.welfareservice.global.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ public class ChatBotController {
      * 유저가 현재 확인하는 복지 서비스 내용들과 함께 챗봇에게 질문해야 하므로 Welfare에 위치
      */
     @GetMapping("/{welfareNo}")
+    @CheckAuthorization
     public BaseResponse<Void> question(@PathVariable String welfareNo) {
         return BaseResponse.onSuccess();
     }

@@ -10,6 +10,9 @@ spring:
       password: ${DB_PASSWORD}
       authentication-database: admin
 
+jwt:
+  key: ${JWT_KEY}
+
 eureka:
   client:
     register-with-eureka: true

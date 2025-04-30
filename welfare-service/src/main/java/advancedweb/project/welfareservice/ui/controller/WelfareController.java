@@ -2,9 +2,9 @@ package advancedweb.project.welfareservice.ui.controller;
 
 import advancedweb.project.welfareservice.domain.entity.enums.Area;
 import advancedweb.project.welfareservice.domain.entity.enums.Target;
+import advancedweb.project.welfareservice.global.annotation.CheckAuthorization;
+import advancedweb.project.welfareservice.global.annotation.CurrentUser;
 import advancedweb.project.welfareservice.global.response.BaseResponse;
-import advancedweb.project.welfareservice.infra.client.AuthFeignClient;
-import advancedweb.project.welfareservice.infra.kafka.producer.TokenValidateEventProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/welfare")
 public class WelfareController {
 
-    private final TokenValidateEventProducer tokenValidateEventProducer;
-    private final AuthFeignClient authFeignClient;
 
     /**
      *  복지 서비스 검색 API
@@ -23,7 +21,8 @@ public class WelfareController {
      *  필터링 기준은 Enum으로 두 항목을 선언하여 RequestParam으로 필터링
      */
     @GetMapping
-    public BaseResponse<Void> searchWelfare(@RequestParam Area area, @RequestParam Target target) {
+    @CheckAuthorization
+    public BaseResponse<Void> searchWelfare(@RequestParam Area area, @RequestParam Target target, @CurrentUser String userNo) {
         return BaseResponse.onSuccess();
     }
 
@@ -33,6 +32,7 @@ public class WelfareController {
      *  조회시 해당 복지의 조회 수 증가 (동시성 이슈)
      */
     @GetMapping("/{welfareNo}")
+    @CheckAuthorization
     public BaseResponse<Void> readWelfareSpec(@PathVariable String welfareNo) {
         return BaseResponse.onSuccess();
     }
@@ -42,6 +42,7 @@ public class WelfareController {
      *  welfare PK 기준으로 파일을 찾아서 URI 전송
      */
     @PostMapping("/download/{welfareNo}")
+    @CheckAuthorization
     public BaseResponse<Void> downloadWelfareFile(@PathVariable String welfareNo) {
         return BaseResponse.onSuccess();
     }
