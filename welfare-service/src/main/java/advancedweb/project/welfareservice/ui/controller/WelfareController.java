@@ -1,11 +1,17 @@
 package advancedweb.project.welfareservice.ui.controller;
 
+import advancedweb.project.welfareservice.application.dto.response.WelfareDetailRes;
+import advancedweb.project.welfareservice.application.dto.response.WelfareSummaryRes;
+import advancedweb.project.welfareservice.application.usecase.FileStorageUseCase;
+import advancedweb.project.welfareservice.application.usecase.WelfareManagementUseCase;
 import advancedweb.project.welfareservice.domain.entity.enums.Area;
 import advancedweb.project.welfareservice.domain.entity.enums.Target;
 import advancedweb.project.welfareservice.global.annotation.CheckAuthorization;
 import advancedweb.project.welfareservice.global.annotation.CurrentUser;
 import advancedweb.project.welfareservice.global.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/welfare")
 public class WelfareController {
 
+    private final WelfareManagementUseCase welfareManagementUseCase;
+    private final FileStorageUseCase fileStorageUseCase;
 
     /**
      *  복지 서비스 검색 API
@@ -22,8 +30,8 @@ public class WelfareController {
      */
     @GetMapping
     @CheckAuthorization
-    public BaseResponse<Void> searchWelfare(@RequestParam Area area, @RequestParam Target target, @CurrentUser String userNo) {
-        return BaseResponse.onSuccess();
+    public BaseResponse<Page<WelfareSummaryRes>> searchWelfare(@RequestParam Area area, @RequestParam Target target, @CurrentUser String userNo) {
+        return BaseResponse.onSuccess(welfareManagementUseCase.search(area, target, userNo));
     }
 
     /**
@@ -33,8 +41,8 @@ public class WelfareController {
      */
     @GetMapping("/{welfareNo}")
     @CheckAuthorization
-    public BaseResponse<Void> readWelfareSpec(@PathVariable String welfareNo) {
-        return BaseResponse.onSuccess();
+    public BaseResponse<WelfareDetailRes> readWelfare(@PathVariable String welfareNo) {
+        return BaseResponse.onSuccess(welfareManagementUseCase.read(welfareNo));
     }
 
     /**
@@ -43,7 +51,7 @@ public class WelfareController {
      */
     @PostMapping("/download/{welfareNo}")
     @CheckAuthorization
-    public BaseResponse<Void> downloadWelfareFile(@PathVariable String welfareNo) {
-        return BaseResponse.onSuccess();
+    public BaseResponse<Resource> downloadWelfareFile(@PathVariable String welfareNo) {
+        return BaseResponse.onSuccess(fileStorageUseCase.download(welfareNo));
     }
 }
