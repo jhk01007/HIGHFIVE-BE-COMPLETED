@@ -31,4 +31,7 @@ public class UserService {
                 .orElseThrow(() -> new RestApiException(_EXIST_ENTITY));
     }
 
+    public Boolean existsByUserNo(String userNo) {
+        return userRepository.existsById(userNo);
+    }
 }

@@ -3,12 +3,15 @@ spring:
     name: welfare-service
   data:
     mongodb:
-      host: localhost
+      host: mongodb
       port: 27017
       database: ${DB_NAME}
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       authentication-database: admin
+
+jwt:
+  key: ${JWT_KEY}
 
 eureka:
   client:

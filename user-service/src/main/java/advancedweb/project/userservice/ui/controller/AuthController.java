@@ -4,6 +4,7 @@ import advancedweb.project.userservice.application.dto.request.LoginReq;
 import advancedweb.project.userservice.application.dto.request.SignUpReq;
 import advancedweb.project.userservice.application.dto.response.AuthRes;
 import advancedweb.project.userservice.application.usecase.UserAuthUseCase;
+import advancedweb.project.userservice.global.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +20,16 @@ public class AuthController {
      *  회원가입 API
      */
     @PostMapping("/sign-up")
-    public ResponseEntity<AuthRes> signUp(@RequestBody SignUpReq request) {
-        return ResponseEntity.ok(userAuthUseCase.signUp(request));
+    public BaseResponse<AuthRes> signUp(@RequestBody SignUpReq request) {
+        return BaseResponse.onSuccess(userAuthUseCase.signUp(request));
     }
 
     /**
      *  로그인 API
      */
     @PostMapping("/login")
-    public ResponseEntity<AuthRes> login(@RequestBody LoginReq request) {
-        return ResponseEntity.ok(userAuthUseCase.login(request));
+    public BaseResponse<AuthRes> login(@RequestBody LoginReq request) {
+        return BaseResponse.onSuccess(userAuthUseCase.login(request));
     }
 
 }

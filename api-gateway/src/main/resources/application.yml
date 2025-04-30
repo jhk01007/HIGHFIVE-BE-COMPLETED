@@ -12,6 +12,10 @@ spring:
           uri: lb://WELFARE-SERVICE
           predicates:
             - Path=/api/welfare/**
+        - id: board-service-route
+          uri: lb://BOARD-SERVICE
+          predicates:
+            - Path=/api/board/**
 server:
   port: 8080
 

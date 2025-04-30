@@ -37,12 +37,14 @@ public class UserAuthUseCase {
         return new AuthRes(tokenProvider.createAccessToken(user.getUserNo()));
     }
 
-    public String validateToken(String token) {
+    public Boolean validateToken(String token) {
         if (!tokenProvider.validateToken(token))
             throw new RestApiException(INVALID_ACCESS_TOKEN);
 
-        return tokenProvider.getId(token)
+        String userNo = tokenProvider.getId(token)
                 .orElseThrow(() -> new RestApiException(INVALID_ID_TOKEN));
+
+        return userService.existsByUserNo(userNo);
     }
 
 

@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface AuthFeignClient {
 
     @GetMapping("/api/users/validate")
-    String validateToken(@RequestHeader("Authorization") String token);
+    Boolean validateToken(@RequestHeader("Authorization") String token);
 }
