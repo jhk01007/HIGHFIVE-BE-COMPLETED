@@ -1,6 +1,10 @@
 spring:
   application:
     name: monitoring
+  boot:
+    admin:
+      client:
+        url: http://monitoring:8085
 
 eureka:
   client:
@@ -19,4 +23,7 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
 

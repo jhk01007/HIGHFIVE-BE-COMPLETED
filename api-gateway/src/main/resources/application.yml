@@ -27,9 +27,13 @@ eureka:
       defaultZone: http://discovery:8761/eureka
 
 management:
-  metrics:
-    enable:
-      system.processor: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 cors:
   allowed-origins: "*"
@@ -45,4 +49,8 @@ exclude-auth-path-patterns:
     - path-pattern: /api/users/sign-up
       method: POST
     - path-pattern: /api/users/login
+      method: POST
+    - path-pattern: /actuator/**
+      method: GET
+    - path-pattern: /actuator/**
       method: POST

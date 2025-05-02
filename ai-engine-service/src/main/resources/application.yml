@@ -20,6 +20,10 @@ logging:
 
 
 management:
-  metrics:
-    enable:
-      system.processor: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

@@ -36,6 +36,10 @@ exclude-auth-path-patterns:
       method: POST
     - path-pattern: /api/users/validate
       method: GET
+    - path-pattern: /actuator/**
+      method: GET
+    - path-pattern: /actuator/**
+      method: POST
 
 logging:
   pattern:
@@ -46,6 +50,9 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
   tracing:
     enabled: true
     sampling:
