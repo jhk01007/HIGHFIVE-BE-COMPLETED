@@ -6,6 +6,7 @@ import advancedweb.project.userservice.application.dto.response.AuthRes;
 import advancedweb.project.userservice.application.usecase.UserAuthUseCase;
 import advancedweb.project.userservice.global.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

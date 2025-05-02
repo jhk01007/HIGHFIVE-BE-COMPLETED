@@ -15,6 +15,8 @@ server:
   port: 8085
 
 management:
-  metrics:
-    enable:
-      system.processor: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

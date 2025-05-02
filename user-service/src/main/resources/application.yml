@@ -19,6 +19,7 @@ eureka:
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.instance_id:${random.value}}
     prefer-ip-address: true
+
 server:
   port: 8081
 
@@ -36,7 +37,19 @@ exclude-auth-path-patterns:
     - path-pattern: /api/users/validate
       method: GET
 
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
 management:
-  metrics:
-    enable:
-      system.processor: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
