@@ -36,7 +36,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-    // Lombok
+    // Spring Boot Admin Client
+    implementation 'de.codecentric:spring-boot-admin-starter-client:2.7.12'
+
+    // Micrometer Tracing + Zipkin
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
+    // Lombok// Micrometer Tracing + Zipkin
+    //    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    //    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 

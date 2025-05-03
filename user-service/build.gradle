@@ -46,6 +46,15 @@ dependencies {
 	// MongoDB
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
+	// Micrometer Tracing + Zipkin
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
+	// Logback
+	implementation 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+	implementation 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 	implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")

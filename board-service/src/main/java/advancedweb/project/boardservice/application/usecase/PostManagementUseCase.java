@@ -3,6 +3,7 @@ package advancedweb.project.boardservice.application.usecase;
 import advancedweb.project.boardservice.application.dto.request.WritePostReq;
 import advancedweb.project.boardservice.application.dto.response.PostDetailRes;
 import advancedweb.project.boardservice.application.dto.response.PostSummaryRes;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
