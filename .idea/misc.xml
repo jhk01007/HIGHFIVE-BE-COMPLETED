@@ -6,6 +6,7 @@
     <file type="web" url="file://$PROJECT_DIR$/api-gateway" />
     <file type="web" url="file://$PROJECT_DIR$/board-service" />
     <file type="web" url="file://$PROJECT_DIR$/consumer-service" />
+    <file type="web" url="file://$PROJECT_DIR$/data-collector" />
     <file type="web" url="file://$PROJECT_DIR$/discovery" />
     <file type="web" url="file://$PROJECT_DIR$/monitoring" />
     <file type="web" url="file://$PROJECT_DIR$/prompt-engine-service" />

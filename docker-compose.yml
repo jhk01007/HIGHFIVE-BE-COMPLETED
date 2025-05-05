@@ -89,6 +89,20 @@ services:
     env_file:
       - ./monitoring/.env
 
+  data-collector:
+    build: ./data-collector
+    container_name: data-collector
+    ports:
+      - "8086:8086"
+    depends_on:
+      - api-gateway
+      - mongodb
+      - mysql
+    networks:
+      - msa-net
+    env_file:
+      - ./data-collector/.env
+
   zookeeper:
     image: bitnami/zookeeper:latest
     container_name: zookeeper
@@ -134,5 +148,24 @@ services:
     networks:
       - msa-net
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - msa-net
+
 networks:
   msa-net:
+
+volumes:
+  mysql-data:

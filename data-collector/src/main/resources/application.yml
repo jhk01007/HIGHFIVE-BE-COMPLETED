@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: data-collector
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ${DB_NAME}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      authentication-database: admin
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/highfive_batch?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  batch:
+    jdbc:
+      initialize-schema: always  # 배치 메타테이블 자동 생성 (운영에선 never로 변경)
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
+
+server:
+  port: 8086
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+public-api:
+  key: ${API_KEY}
