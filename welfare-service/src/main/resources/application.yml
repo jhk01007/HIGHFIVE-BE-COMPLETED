@@ -47,6 +47,6 @@ management:
 
 springdoc:
   api-docs:
-    path: /v3/api-docs  # 기본값이지만 명시적으로 설정해두는 게 좋음
+    path: /api/welfare/v3/api-docs  # 기본값이지만 명시적으로 설정해두는 게 좋음
   swagger-ui:
     path: /swagger-ui.html  # Swagger UI 직접 접근 경로

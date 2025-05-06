@@ -5,6 +5,8 @@ import advancedweb.project.boardservice.application.usecase.CommentManagementUse
 import advancedweb.project.boardservice.global.annotation.CheckAuthorization;
 import advancedweb.project.boardservice.global.annotation.CurrentUser;
 import advancedweb.project.boardservice.global.response.BaseResponse;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,9 @@ public class CommentController {
      */
     @PostMapping
     @CheckAuthorization
-    public BaseResponse<Void> write(@PathVariable String postNo, @RequestBody WriteCmtReq request, @CurrentUser String userNo) {
+    public BaseResponse<Void> write(@PathVariable String postNo,
+                                    @RequestBody WriteCmtReq request,
+                                    @CurrentUser @Parameter(hidden = true) String userNo) {
         commentManagementUseCase.write(postNo, request, userNo);
         return BaseResponse.onSuccess();
     }
@@ -30,8 +34,10 @@ public class CommentController {
      */
     @DeleteMapping("/{commentNo}")
     @CheckAuthorization
-    public BaseResponse<Void> delete(@PathVariable String postNo, @PathVariable String commentNo, @CurrentUser String userNo) {
-        commentManagementUseCase.delete(postNo, commentNo);
+    public BaseResponse<Void> delete(@PathVariable String postNo,
+                                     @PathVariable String commentNo,
+                                     @CurrentUser @Parameter(hidden = true) String userNo) {
+        commentManagementUseCase.delete(postNo, commentNo, userNo);
         return BaseResponse.onSuccess();
     }
 }
