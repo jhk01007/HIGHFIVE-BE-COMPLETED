@@ -15,21 +15,19 @@ public class Post {
 
     @Id
     private String postNo;
-    private PostType postType;
     private String title;
     private String content;
     private String writerNo;
     private LocalDateTime createdAt;
 
-    private Post(PostType postType, String title, String content, String writerNo) {
-        this.postType = postType;
+    private Post(String title, String content, String writerNo) {
         this.title = title;
         this.content = content;
         this.writerNo = writerNo;
         this.createdAt = LocalDateTime.now();
     }
 
-    public static Post create(PostType postType, String title, String content, String writerNo) {
-        return new Post(postType, title, content, writerNo);
+    public static Post create(String title, String content, String writerNo) {
+        return new Post(title, content, writerNo);
     }
 }

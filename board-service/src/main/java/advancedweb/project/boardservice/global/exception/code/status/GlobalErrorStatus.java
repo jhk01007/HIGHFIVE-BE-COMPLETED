@@ -19,6 +19,8 @@ public enum GlobalErrorStatus implements BaseCodeInterface {
     _METHOD_ARGUMENT_ERROR(HttpStatus.BAD_REQUEST, "COMMON405", "Argument Type이 올바르지 않습니다."),
     _EXIST_ENTITY(HttpStatus.BAD_REQUEST, "COMMON400", "이미 존재하는 요청입니다."),
     _TOO_MANY_REQUEST(HttpStatus.TOO_MANY_REQUESTS, "COMMON429", "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요."),
+    _NOT_POST_OWNER(HttpStatus.FORBIDDEN, "POST4031", "해당 게시글에 대한 삭제 권한이 없습니다."),
+    _NOT_COMMENT_OWNER(HttpStatus.FORBIDDEN, "POST4031", "해당 댓글에 대한 삭제 권한이 없습니다."),
 
     // S3 관련 에러
     _S3_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "S3_5001", "파일 업로드에 실패했습니다."),

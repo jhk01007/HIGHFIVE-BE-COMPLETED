@@ -34,6 +34,7 @@ services:
     depends_on:
       - api-gateway
       - mongodb
+      - kafka
     networks:
       - msa-net
     env_file:
@@ -47,6 +48,7 @@ services:
     depends_on:
       - api-gateway
       - mongodb
+      - user-service
     networks:
       - msa-net
     env_file:
