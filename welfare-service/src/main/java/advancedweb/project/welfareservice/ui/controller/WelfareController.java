@@ -15,6 +15,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/welfare")
@@ -31,10 +33,10 @@ public class WelfareController {
      */
     @GetMapping
     @CheckAuthorization
-    public BaseResponse<Page<WelfareSummaryRes>> searchWelfare(@RequestParam Area area,
+    public BaseResponse<List<WelfareSummaryRes>> searchWelfare(@RequestParam Area area,
                                                                @RequestParam Target target,
-                                                               @CurrentUser @Parameter(hidden = true) String userNo) {
-        return BaseResponse.onSuccess(welfareManagementUseCase.search(area, target, userNo));
+                                                               @RequestParam String question) {
+        return BaseResponse.onSuccess(welfareManagementUseCase.search(area, target, question));
     }
 
     /**
