@@ -22,7 +22,7 @@ public class UserService {
 
     public User save(SignUpReq request) {
         return userRepository.save(
-                User.create(request.nickname(), request.username(), request.password())
+                User.create(request.username(), request.password())
         );
     }
 
