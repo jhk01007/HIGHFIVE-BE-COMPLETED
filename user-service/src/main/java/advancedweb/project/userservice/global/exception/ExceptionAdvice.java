@@ -3,6 +3,7 @@ package advancedweb.project.userservice.global.exception;
 import advancedweb.project.userservice.global.exception.code.BaseCodeDto;
 import advancedweb.project.userservice.global.exception.code.status.GlobalErrorStatus;
 import advancedweb.project.userservice.global.response.BaseResponse;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-@RestControllerAdvice(annotations = {RestController.class})
+@Hidden
+@RestControllerAdvice(annotations = {RestController.class}, basePackages = {"advancedweb.project.userservice.ui.controller"})
 @RequiredArgsConstructor
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 

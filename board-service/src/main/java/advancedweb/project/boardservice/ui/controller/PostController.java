@@ -7,6 +7,7 @@ import advancedweb.project.boardservice.application.usecase.PostManagementUseCas
 import advancedweb.project.boardservice.global.annotation.CheckAuthorization;
 import advancedweb.project.boardservice.global.annotation.CurrentUser;
 import advancedweb.project.boardservice.global.response.BaseResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,8 @@ public class PostController {
      */
     @GetMapping("/{postNo}")
     @CheckAuthorization
-    public BaseResponse<PostDetailRes> readPost(@PathVariable String postNo, @CurrentUser String userNo) {
+    public BaseResponse<PostDetailRes> readPost(@PathVariable String postNo,
+                                                @CurrentUser @Parameter(hidden = true) String userNo) {
         return BaseResponse.onSuccess(postManagementUseCase.read(postNo, userNo));
     }
 
@@ -56,7 +58,8 @@ public class PostController {
      */
     @PostMapping
     @CheckAuthorization
-    public BaseResponse<Void> writePost(@CurrentUser String userNo, @RequestBody WritePostReq request) {
+    public BaseResponse<Void> writePost(@CurrentUser @Parameter(hidden = true) String userNo,
+                                        @RequestBody WritePostReq request) {
         postManagementUseCase.write(userNo, request);
         return BaseResponse.onSuccess();
     }
@@ -67,7 +70,8 @@ public class PostController {
      */
     @DeleteMapping("/{postNo}")
     @CheckAuthorization
-    public BaseResponse<Void> deletePost(@PathVariable String postNo, @CurrentUser String userNo) {
+    public BaseResponse<Void> deletePost(@PathVariable String postNo,
+                                         @CurrentUser @Parameter(hidden = true) String userNo) {
         postManagementUseCase.delete(postNo, userNo);
         return BaseResponse.onSuccess();
     }

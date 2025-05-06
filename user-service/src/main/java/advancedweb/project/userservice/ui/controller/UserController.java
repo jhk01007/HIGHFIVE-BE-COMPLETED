@@ -5,6 +5,7 @@ import advancedweb.project.userservice.application.dto.response.ProfileRes;
 import advancedweb.project.userservice.application.usecase.UserManagementUseCase;
 import advancedweb.project.userservice.global.annotation.CurrentUser;
 import advancedweb.project.userservice.global.response.BaseResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,8 @@ public class UserController {
      * 내 정보로 입력한 나의 나이 및 지역 수정
      */
     @PatchMapping
-    public BaseResponse<ProfileRes> updateProfile(@RequestBody ProfileReq request, @CurrentUser String userNo) {
+    public BaseResponse<ProfileRes> updateProfile(@RequestBody ProfileReq request,
+                                                  @CurrentUser @Parameter(hidden = true) String userNo) {
         return BaseResponse.onSuccess(userManagementUseCase.updateProfile(request, userNo));
     }
 }
