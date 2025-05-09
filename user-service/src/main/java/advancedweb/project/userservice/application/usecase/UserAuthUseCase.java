@@ -11,8 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static advancedweb.project.userservice.global.exception.code.status.AuthErrorStatus.INVALID_ACCESS_TOKEN;
-import static advancedweb.project.userservice.global.exception.code.status.AuthErrorStatus.INVALID_ID_TOKEN;
+import static advancedweb.project.userservice.global.exception.code.status.AuthErrorStatus.*;
 import static advancedweb.project.userservice.global.exception.code.status.GlobalErrorStatus._EXIST_USERNAME;
 
 @Service
@@ -33,6 +32,9 @@ public class UserAuthUseCase {
     }
 
     public AuthRes login(LoginReq request) {
+        if(request.username().isEmpty() || request.password().isEmpty())
+            throw new RestApiException(_EMPTY_USERNAME_PASSWORD);
+
         User user = userService.findByLoginReq(request);
         return new AuthRes(tokenProvider.createAccessToken(user.getUserNo()));
     }

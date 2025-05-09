@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static advancedweb.project.userservice.global.exception.code.status.GlobalErrorStatus._EXIST_ENTITY;
+import static advancedweb.project.userservice.global.exception.code.status.GlobalErrorStatus._LOGIN_ERROR;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class UserService {
 
     public User findByLoginReq(LoginReq request) {
         return userRepository.findByUsernameAndPassword(request.username(), request.password())
-                .orElseThrow(() -> new RestApiException(_EXIST_ENTITY));
+                .orElseThrow(() -> new RestApiException(_LOGIN_ERROR));
     }
 
     public Boolean existsByUserNo(String userNo) {
