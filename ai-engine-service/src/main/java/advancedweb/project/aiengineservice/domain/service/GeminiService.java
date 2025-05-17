@@ -43,14 +43,17 @@ public class GeminiService {
         String prompt = buildPrompt(req);
 
         try {
-            return extractStringListFromRawResponse(geminiApiClient.generateContent(
+            Object result = geminiApiClient.generateContent(
                     geminiKey, Map.of(
                             "contents", List.of(
                                     Map.of("parts",
                                             List.of(Map.of("text", prompt)))
                             )
-                    )
-            ));
+                    ));
+            System.out.println("result = " + result);
+
+            return extractStringListFromRawResponse(result
+            );
         } catch (IOException e) {
             e.printStackTrace();
             throw new RestApiException(_PARSING_ERROR);
@@ -66,9 +69,10 @@ public class GeminiService {
      *  Private Method
      */
     public List<String> extractStringListFromRawResponse(Object rawResponse) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
         // 1. 응답 Map에서 text 추출
         Map<String, Object> responseMap = (Map<String, Object>) rawResponse;
-
         String rawText = ((Map<String, Object>) ((Map<String, Object>) ((List<Object>) responseMap
                 .get("candidates")).get(0))
                 .get("content"))
@@ -76,17 +80,24 @@ public class GeminiService {
                 ? (String) ((Map<String, Object>) partsList.get(0)).get("text")
                 : "";
 
-        // 2. 텍스트에서 ```json ``` 제거
-        String cleaned = rawText.replaceAll("(?s)```json|```", "").trim();  // ex: ["id1", "id2"]
+        // 2. ```json 블록 안의 JSON 배열만 추출
+        int start = rawText.indexOf("```json");
+        int end = rawText.indexOf("```", start + 7); // 7 == length of "```json"
 
-        // 3. Jackson Streaming API로 파싱
+        if (start == -1 || end == -1) {
+            throw new RestApiException(_PARSING_ERROR);  // 원하는 JSON 블록이 없으면 예외
+        }
+
+        String jsonArrayString = rawText.substring(start + 7, end).trim();
+
+        // 3. JSON 파싱 (Streaming 방식 사용 가능하지만 간단한 경우 ObjectMapper도 충분)
         JsonFactory factory = new JsonFactory();
-        JsonParser parser = factory.createParser(cleaned);
+        JsonParser parser = factory.createParser(jsonArrayString);
 
         List<String> result = new ArrayList<>();
         if (parser.nextToken() == JsonToken.START_ARRAY) {
             while (parser.nextToken() != JsonToken.END_ARRAY) {
-                result.add(parser.getValueAsString());  // 각 String 값 추가
+                result.add(parser.getValueAsString());
             }
         }
 
