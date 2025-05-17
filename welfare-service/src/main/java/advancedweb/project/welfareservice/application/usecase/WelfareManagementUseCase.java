@@ -1,7 +1,7 @@
 package advancedweb.project.welfareservice.application.usecase;
 
 import advancedweb.project.welfareservice.application.dto.request.RecommendReq;
-import advancedweb.project.welfareservice.application.dto.response.RecommendRes;
+import advancedweb.project.welfareservice.application.dto.request.RecommendWelfareItemReq;
 import advancedweb.project.welfareservice.application.dto.response.WelfareDetailRes;
 import advancedweb.project.welfareservice.application.dto.response.WelfareSummaryRes;
 import advancedweb.project.welfareservice.domain.entity.Welfare;
@@ -26,17 +26,23 @@ public class WelfareManagementUseCase {
     public List<WelfareSummaryRes> search(Area area, Target target, String question) {
         List<Welfare> filtered = welfareService.filter(area, target);
 
-        List<String> recommendedIds = recommendFeignClient.recommend(filtered.stream()
-                        .map(RecommendReq::create)
-                        .toList(),
-                question
-        ).stream().map(RecommendRes::welfareNo).toList();
+        List<String> recommendedIds = recommendFeignClient
+                .recommend(
+                        RecommendReq.create(
+                                question,
+                                filtered.stream()
+                                        .map(RecommendWelfareItemReq::create)
+                                        .toList()
+                        )
+                )
+                .recommendedPks();
 
         return filtered.stream()
-                .filter(item -> recommendedIds.contains(item.getWelfareNo()))
+                .filter(w -> recommendedIds.contains(w.getWelfareNo()))
                 .map(WelfareSummaryRes::create)
                 .toList();
     }
+
 
     public WelfareDetailRes read(String welfareNo) {
         Welfare welfare = welfareService.read(welfareNo);

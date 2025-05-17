@@ -1,0 +1,121 @@
+package advancedweb.project.aiengineservice.domain.service;
+
+import advancedweb.project.aiengineservice.application.dto.request.AiRecommendRequest;
+import advancedweb.project.aiengineservice.application.dto.request.ChatBotRequest;
+import advancedweb.project.aiengineservice.global.exception.RestApiException;
+import advancedweb.project.aiengineservice.infra.client.GeminiApiClient;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static advancedweb.project.aiengineservice.global.exception.code.status.GlobalErrorStatus._PARSING_ERROR;
+
+@Service
+@RequiredArgsConstructor
+public class GeminiService {
+    /**
+     * Gemini 관련 로직 처리 서비스
+     */
+
+    private final GeminiApiClient geminiApiClient;
+
+    @Value("${GEMINI_API_KEY}") private String geminiKey;
+
+    /**
+     *
+     * @param req 요청 DTO
+     * @return 추천된 복지 PK 리스트
+     * 프롬프트 구성 →  HTTP 호출 →  응답 처리 →  파싱 →  메트릭
+     */
+    public List<String> requestRecommendation(AiRecommendRequest req){
+        // 프롬프트 생성
+        String prompt = buildPrompt(req);
+
+        try {
+            return extractStringListFromRawResponse(geminiApiClient.generateContent(
+                    geminiKey, Map.of(
+                            "contents", List.of(
+                                    Map.of("parts",
+                                            List.of(Map.of("text", prompt)))
+                            )
+                    )
+            ));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RestApiException(_PARSING_ERROR);
+        }
+    }
+
+    public String generateReply(ChatBotRequest req) {
+        return null;
+    }
+
+
+    /**
+     *  Private Method
+     */
+    public List<String> extractStringListFromRawResponse(Object rawResponse) throws IOException {
+        // 1. 응답 Map에서 text 추출
+        Map<String, Object> responseMap = (Map<String, Object>) rawResponse;
+
+        String rawText = ((Map<String, Object>) ((Map<String, Object>) ((List<Object>) responseMap
+                .get("candidates")).get(0))
+                .get("content"))
+                .get("parts") instanceof List partsList
+                ? (String) ((Map<String, Object>) partsList.get(0)).get("text")
+                : "";
+
+        // 2. 텍스트에서 ```json ``` 제거
+        String cleaned = rawText.replaceAll("(?s)```json|```", "").trim();  // ex: ["id1", "id2"]
+
+        // 3. Jackson Streaming API로 파싱
+        JsonFactory factory = new JsonFactory();
+        JsonParser parser = factory.createParser(cleaned);
+
+        List<String> result = new ArrayList<>();
+        if (parser.nextToken() == JsonToken.START_ARRAY) {
+            while (parser.nextToken() != JsonToken.END_ARRAY) {
+                result.add(parser.getValueAsString());  // 각 String 값 추가
+            }
+        }
+
+        return result;
+    }
+
+    private String buildPrompt(AiRecommendRequest req) {
+        String welfareDescriptions = req.getWelfareItemList().stream()
+                .map(w -> String.format(
+                        "• ID: %s\n" +
+                                "  지원 대상: %s\n" +
+                                "  서비스 제목: %s\n" +
+                                "  선정 기준: %s\n" +
+                                "  신청 방법: %s",
+                        w.getPk(),
+                        w.getSupportTarget(),
+                        w.getWelfareTitle(),
+                        w.getSelectionCriteria(),
+                        w.getApplyMethod()
+                ))
+                .collect(Collectors.joining("\n\n"));
+
+        return String.format(
+                "사용자 입력: \"%s\"\n\n" +
+                        "복지 서비스 목록:\n%s\n\n" +
+                        "다음 복지 서비스 ID 목록 중 가장 적합한 ID만 JSON 배열로 출력하세요.\n" +
+                        "예시 출력: [101]",
+                req.getRawUserInput(),
+                welfareDescriptions
+        );
+    }
+}

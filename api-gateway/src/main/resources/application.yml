@@ -16,6 +16,10 @@ spring:
           uri: lb://BOARD-SERVICE
           predicates:
             - Path=/api/board/**
+        - id: ai-engine-service-route
+          uri: lb://AI-ENGINE-SERVICE
+          predicates:
+            - Path=/api/ai/**
         - id: swagger-user-docs
           uri: lb://USER-SERVICE
           predicates:

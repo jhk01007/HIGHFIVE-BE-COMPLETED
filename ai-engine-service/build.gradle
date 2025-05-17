@@ -38,6 +38,13 @@ dependencies {
 	// Kafka
 	implementation 'org.springframework.kafka:spring-kafka'
 
+	// OpenFeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	// Jackson (Streaming API)
+	implementation 'com.fasterxml.jackson.core:jackson-core'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

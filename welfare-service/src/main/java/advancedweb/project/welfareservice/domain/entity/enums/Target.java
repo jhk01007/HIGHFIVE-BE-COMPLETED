@@ -24,6 +24,6 @@ public enum Target {
         return Arrays.stream(Target.values())
                 .filter(target -> target.getDesc().equals(desc))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknown target description: " + desc));
+                .orElseThrow(() -> new IllegalArgumentException("Unknown supportTarget description: " + desc));
     }
 }

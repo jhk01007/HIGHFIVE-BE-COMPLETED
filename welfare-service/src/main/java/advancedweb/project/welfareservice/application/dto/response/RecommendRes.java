@@ -1,5 +1,7 @@
 package advancedweb.project.welfareservice.application.dto.response;
 
+import java.util.List;
+
 public record RecommendRes (
-        String welfareNo
+        List<String> recommendedPks
 ) {}

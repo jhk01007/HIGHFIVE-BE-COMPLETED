@@ -1,19 +1,12 @@
 package advancedweb.project.welfareservice.application.dto.request;
 
-import advancedweb.project.welfareservice.domain.entity.Welfare;
+import java.util.List;
 
 public record RecommendReq (
-        String target,
-        String criteria,
-        String content,
-        String applyMethod
+        String rawUserInput,
+        List<RecommendWelfareItemReq> welfareItemList
 ) {
-    public static RecommendReq create(Welfare welfare) {
-        return new RecommendReq(
-                welfare.getDetail().getTarget(),
-                welfare.getDetail().getCriteria(),
-                welfare.getDetail().getContent(),
-                welfare.getDetail().getApplyMethod()
-        );
+    public static RecommendReq create(String question, List<RecommendWelfareItemReq> items) {
+        return new RecommendReq(question, items);
     }
 }

@@ -7,12 +7,9 @@ import advancedweb.project.welfareservice.application.usecase.WelfareManagementU
 import advancedweb.project.welfareservice.domain.entity.enums.Area;
 import advancedweb.project.welfareservice.domain.entity.enums.Target;
 import advancedweb.project.welfareservice.global.annotation.CheckAuthorization;
-import advancedweb.project.welfareservice.global.annotation.CurrentUser;
 import advancedweb.project.welfareservice.global.response.BaseResponse;
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +30,8 @@ public class WelfareController {
      */
     @GetMapping
     @CheckAuthorization
-    public BaseResponse<List<WelfareSummaryRes>> searchWelfare(@RequestParam Area area,
-                                                               @RequestParam Target target,
+    public BaseResponse<List<WelfareSummaryRes>> searchWelfare(@RequestParam(required = false) Area area,
+                                                               @RequestParam(required = false) Target target,
                                                                @RequestParam String question) {
         return BaseResponse.onSuccess(welfareManagementUseCase.search(area, target, question));
     }
