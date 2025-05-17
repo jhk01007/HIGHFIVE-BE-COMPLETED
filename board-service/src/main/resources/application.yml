@@ -9,6 +9,15 @@ spring:
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       authentication-database: admin
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000ms
 
 jwt:
   key: ${JWT_KEY}

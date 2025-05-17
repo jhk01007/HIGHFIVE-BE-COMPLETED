@@ -1,8 +1,8 @@
 package advancedweb.project.boardservice.global.aop;
 
 import advancedweb.project.boardservice.global.exception.RestApiException;
+import advancedweb.project.boardservice.global.cache.AuthService;
 import advancedweb.project.boardservice.global.security.TokenProvider;
-import advancedweb.project.boardservice.infra.client.AuthFeignClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import static advancedweb.project.boardservice.global.exception.code.status.Glob
 public class AuthorizationAspect {
 
     private final TokenProvider tokenProvider;
-    private final AuthFeignClient authFeignClient;
+    private final AuthService authService;
 
     @Around("@annotation(advancedweb.project.boardservice.global.annotation.CheckAuthorization)")
     public Object authorize(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -31,7 +31,7 @@ public class AuthorizationAspect {
         String token = tokenProvider.getToken(request)
                 .orElseThrow(() -> new RestApiException(_UNAUTHORIZED));
 
-        if (!authFeignClient.validateToken(token)) {
+        if (!authService.isTokenValid(token)) {
             throw new RestApiException(_UNAUTHORIZED);
         }
 

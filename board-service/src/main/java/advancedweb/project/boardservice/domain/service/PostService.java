@@ -22,8 +22,8 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public void save(String userNo, WritePostReq request) {
-        postRepository.save(
+    public Post save(String userNo, WritePostReq request) {
+        return postRepository.save(
                 Post.create(request.title(), request.content(), userNo)
         );
     }
