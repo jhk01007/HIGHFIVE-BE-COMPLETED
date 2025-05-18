@@ -56,4 +56,10 @@ public class WelfareController {
     public BaseResponse<Resource> downloadWelfareFile(@PathVariable String welfareNo) {
         return BaseResponse.onSuccess(fileStorageUseCase.download(welfareNo));
     }
+
+    @GetMapping
+    @CheckAuthorization
+    public BaseResponse<List<WelfareSummaryRes>> readPopularWelfare() {
+        return BaseResponse.onSuccess(welfareManagementUseCase.readPopularWelfare());
+    }
 }

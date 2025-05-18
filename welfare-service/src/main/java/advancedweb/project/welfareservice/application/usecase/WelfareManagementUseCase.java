@@ -7,6 +7,7 @@ import advancedweb.project.welfareservice.application.dto.response.WelfareSummar
 import advancedweb.project.welfareservice.domain.entity.Welfare;
 import advancedweb.project.welfareservice.domain.entity.enums.Area;
 import advancedweb.project.welfareservice.domain.entity.enums.Target;
+import advancedweb.project.welfareservice.domain.service.ViewCountService;
 import advancedweb.project.welfareservice.domain.service.WelfareService;
 import advancedweb.project.welfareservice.infra.client.RecommendFeignClient;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class WelfareManagementUseCase {
     // DI
     private final WelfareService welfareService;
     private final RecommendFeignClient recommendFeignClient;
+    private final ViewCountService viewCountService;
 
     // Method
     public List<WelfareSummaryRes> search(Area area, Target target, String question) {
@@ -46,6 +48,14 @@ public class WelfareManagementUseCase {
 
     public WelfareDetailRes read(String welfareNo) {
         Welfare welfare = welfareService.read(welfareNo);
+        viewCountService.increment(welfareNo);
         return WelfareDetailRes.create(welfare);
+    }
+
+    public List<WelfareSummaryRes> readPopularWelfare() {
+        return viewCountService.readTop5().stream()
+                .map(welfareService::read)
+                .map(WelfareSummaryRes::create)
+                .toList();
     }
 }
