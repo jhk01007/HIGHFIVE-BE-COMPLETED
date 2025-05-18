@@ -15,6 +15,7 @@ public class RecentBoardCacheUpdater {
     private final RedisTemplate<String, Post> redisTemplate;
 
     public void cacheRecentPost(Post post) {
+        redisTemplate.opsForList().remove(RECENT_POST_KEY, 0, post);
         redisTemplate.opsForList().leftPush(RECENT_POST_KEY, post);
         redisTemplate.opsForList().trim(RECENT_POST_KEY, 0, 4);
     }

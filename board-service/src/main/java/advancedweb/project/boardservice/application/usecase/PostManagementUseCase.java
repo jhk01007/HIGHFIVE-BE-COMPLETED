@@ -34,10 +34,6 @@ public class PostManagementUseCase {
 
     // Method
     @Transactional(readOnly = true)
-    @Cacheable(
-            cacheNames = "boardsList",
-            key = "'BOARD:LIST:' + #page"
-    )
     public Page<PostSummaryRes> readAll(Integer page) {
         return postService.readAll(
                 PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createdAt"))
@@ -52,10 +48,6 @@ public class PostManagementUseCase {
     }
 
     @Transactional
-    @Cacheable(
-            cacheNames = "boards",
-            key = "'BOARD:' + #postNo"
-    )
     public PostDetailRes read(String postNo, String userNo) {
         Post post = postService.read(postNo);
         List<CommentRes> comments = commentManagementUseCase.read(postNo, userNo);
@@ -65,32 +57,22 @@ public class PostManagementUseCase {
     }
 
     @Transactional
-    @CachePut(
-            cacheNames = "boards",
-            key = "'BOARD:' + #result.postNo"
-    )
     @CacheEvict(
             cacheNames = "boardsList",
             allEntries = true
     )
-    public Post write(String userNo, WritePostReq request) {
+    public PostDetailRes write(String userNo, WritePostReq request) {
         Post post = postService.save(userNo, request);
         recentBoardCacheUpdater.cacheRecentPost(post);
 
-        return post;
+        return PostDetailRes.create(post, List.of(), userNo);
     }
 
     @Transactional
-    @Caching(evict = {
-            @CacheEvict(
-                    cacheNames = "boards",
-                    key        = "'BOARD:' + #postId"
-            ),
-            @CacheEvict(
-                    cacheNames  = "boardsList",
-                    allEntries  = true
-            )
-    })
+    @CacheEvict(
+            cacheNames  = "boardsList",
+            allEntries  = true
+    )
     public void delete(String postNo, String userNo) {
         if (!postService.isMine(postNo, userNo))
             throw new RestApiException(_NOT_POST_OWNER);

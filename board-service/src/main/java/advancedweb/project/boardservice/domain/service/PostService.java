@@ -6,6 +6,7 @@ import advancedweb.project.boardservice.domain.entity.Post;
 import advancedweb.project.boardservice.domain.repository.PostRepository;
 import advancedweb.project.boardservice.global.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -43,10 +44,17 @@ public class PostService {
     }
 
     public Page<PostSummaryRes> readAll(PageRequest pageRequest) {
-        List<PostSummaryRes> result = postRepository.findAll(pageRequest).stream()
+        List<PostSummaryRes> result = readAllToList(pageRequest);
+        return new PageImpl<>(result, pageRequest, result.size());
+    }
+
+    @Cacheable(
+            cacheNames = "boardsList",
+            key = "'BOARD:LIST:' + #page"
+    )
+    public List<PostSummaryRes> readAllToList(PageRequest pageRequest) {
+        return postRepository.findAll(pageRequest).stream()
                 .map(PostSummaryRes::create)
                 .toList();
-
-        return new PageImpl<>(result, pageRequest, result.size());
     }
 }

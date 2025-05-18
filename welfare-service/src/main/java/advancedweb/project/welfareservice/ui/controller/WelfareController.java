@@ -57,7 +57,7 @@ public class WelfareController {
         return BaseResponse.onSuccess(fileStorageUseCase.download(welfareNo));
     }
 
-    @GetMapping
+    @GetMapping("/popular")
     @CheckAuthorization
     public BaseResponse<List<WelfareSummaryRes>> readPopularWelfare() {
         return BaseResponse.onSuccess(welfareManagementUseCase.readPopularWelfare());
