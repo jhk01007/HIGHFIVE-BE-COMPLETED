@@ -20,9 +20,7 @@ public class ChatBotController {
     private final ChatBotUseCase chatBotUseCase;
 
     @PostMapping("/chat")
-    public ResponseEntity<ChatBotResponse> chat(
-            @RequestBody ChatBotRequest req
-    ){
+    public ResponseEntity<ChatBotResponse> chat(@RequestBody ChatBotRequest req){
         return ResponseEntity.ok(chatBotUseCase.chat(req));
     }
 }

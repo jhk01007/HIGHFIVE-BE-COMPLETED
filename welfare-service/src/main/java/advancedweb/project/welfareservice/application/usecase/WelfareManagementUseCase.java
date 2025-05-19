@@ -9,7 +9,7 @@ import advancedweb.project.welfareservice.domain.entity.enums.Area;
 import advancedweb.project.welfareservice.domain.entity.enums.Target;
 import advancedweb.project.welfareservice.domain.service.ViewCountService;
 import advancedweb.project.welfareservice.domain.service.WelfareService;
-import advancedweb.project.welfareservice.infra.client.RecommendFeignClient;
+import advancedweb.project.welfareservice.infra.client.AiFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +21,14 @@ public class WelfareManagementUseCase {
 
     // DI
     private final WelfareService welfareService;
-    private final RecommendFeignClient recommendFeignClient;
+    private final AiFeignClient aiFeignClient;
     private final ViewCountService viewCountService;
 
     // Method
     public List<WelfareSummaryRes> search(Area area, Target target, String question) {
         List<Welfare> filtered = welfareService.filter(area, target);
 
-        List<String> recommendedIds = recommendFeignClient
+        List<String> recommendedIds = aiFeignClient
                 .recommend(
                         RecommendReq.create(
                                 question,
