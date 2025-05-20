@@ -1,5 +1,6 @@
 package advancedweb.project.welfareservice.ui.controller;
 
+import advancedweb.project.welfareservice.application.dto.response.DownloadFileRes;
 import advancedweb.project.welfareservice.application.dto.response.WelfareDetailRes;
 import advancedweb.project.welfareservice.application.dto.response.WelfareSummaryRes;
 import advancedweb.project.welfareservice.application.usecase.FileStorageUseCase;
@@ -53,7 +54,7 @@ public class WelfareController {
      */
     @PostMapping("/download/{welfareNo}")
     @CheckAuthorization
-    public BaseResponse<Resource> downloadWelfareFile(@PathVariable String welfareNo) {
+    public BaseResponse<DownloadFileRes> downloadWelfareFile(@PathVariable String welfareNo) {
         return BaseResponse.onSuccess(fileStorageUseCase.download(welfareNo));
     }
 
