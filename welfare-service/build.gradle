@@ -36,6 +36,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
+    // Resilience4j & Retry
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3'
+    implementation 'io.github.resilience4j:resilience4j-retry'
+    implementation 'io.github.resilience4j:resilience4j-feign'
+
     // Spring Boot Admin Client
     implementation 'de.codecentric:spring-boot-admin-starter-client:2.7.12'
 

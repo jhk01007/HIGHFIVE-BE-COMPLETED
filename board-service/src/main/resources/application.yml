@@ -48,6 +48,20 @@ management:
     tracing:
       endpoint: http://zipkin:9411/api/v2/spans
 
+resilience4j:
+  retry:
+    instances:
+      authClient:
+        max-attempts: 3
+        wait-duration: 300ms
+
+  circuitbreaker:
+    instances:
+      authCircuit:
+        sliding-window-size: 20
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+
 springdoc:
   api-docs:
     path: /api/board/v3/api-docs  # 기본값이지만 명시적으로 설정해두는 게 좋음
