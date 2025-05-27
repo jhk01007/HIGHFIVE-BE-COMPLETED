@@ -49,6 +49,11 @@ jobs:
           git config --global user.name "githubaction"
           git clone --single-branch --branch ${{ env.HELM_BRANCH }} https://x-access-token:${{ secrets.HELM_REPO_PAT }}@github.com/TEAM-HIGHFIVE/HIGHFIVE-HELM-CHARTS.git helm-chart
 
+      - name: Fix remote URL for authenticated push
+        run: |
+          cd helm-chart
+          git remote set-url origin https://x-access-token:${{ secrets.HELM_REPO_PAT }}@github.com/TEAM-HIGHFIVE/HIGHFIVE-HELM-CHARTS.git
+
       - name: Change Image tag of the Helm Chart
         uses: mikefarah/yq@v4.34.1
         with:
