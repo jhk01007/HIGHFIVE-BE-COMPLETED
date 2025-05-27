@@ -1,7 +1,7 @@
 name: AI-Engine-Service Image Build
 
 env:
-  SERVICE_NAME: aI-engine-image-service
+  SERVICE_NAME: ai-engine-image-service
   BUILD_ID: ${{ github.sha }}-${{ github.run_id }}
   HELM_VALUE: ai-engine-service-chart/values.yaml
   HELM_BRANCH: main
