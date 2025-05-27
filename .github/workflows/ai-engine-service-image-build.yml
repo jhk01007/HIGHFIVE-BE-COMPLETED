@@ -41,6 +41,7 @@ jobs:
           cd ${{ env.SERVICE_NAME }}
           docker build -f ./Dockerfile -t $IMAGE_TAG .
           docker push $IMAGE_TAG
+          cd ..
 
       - name: Checkout Helm Repository
         run: |
