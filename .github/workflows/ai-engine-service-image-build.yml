@@ -44,15 +44,12 @@ jobs:
           cd ..
 
       - name: Checkout Helm Repository
-        run: |
-          git config --global user.email "githubaction@example.com"
-          git config --global user.name "githubaction"
-          git clone --single-branch --branch ${{ env.HELM_BRANCH }} https://x-access-token:${{ secrets.HELM_REPO_PAT }}@github.com/TEAM-HIGHFIVE/HIGHFIVE-HELM-CHARTS.git helm-chart
-
-      - name: Fix remote URL for authenticated push
-        run: |
-          cd helm-chart
-          git remote set-url origin https://x-access-token:${{ secrets.HELM_REPO_PAT }}@github.com/TEAM-HIGHFIVE/HIGHFIVE-HELM-CHARTS.git
+        uses: actions/checkout@v4
+        with:
+          repository: TEAM-HIGHFIVE/HIGHFIVE-HELM-CHARTS
+          path: helm-chart
+          ref: ${{ env.HELM_BRANCH }}
+          ssh-key: ${{ secrets.HELM_REPO_SSH_KEY }}
 
       - name: Change Image tag of the Helm Chart
         uses: mikefarah/yq@v4.34.1
@@ -66,17 +63,16 @@ jobs:
           git config --local user.name "githubaction"
           git add ${{ env.HELM_VALUE }}
           git commit -m "Update ${SERVICE_NAME} image tag to ${{ env.BUILD_ID }}" || echo "No changes to commit"
-          
+
           attempts=0
           max_attempts=3
           
           while [ $attempts -lt $max_attempts ]; do
-            if git push --force origin ${{ env.HELM_BRANCH }}; then
+            if git push origin ${{ env.HELM_BRANCH }}; then
               echo "Push successful!"
               break
             else
               echo "Push failed due to remote ref lock. Attempting rebase with remote branch."
-              # 원격 브랜치 최신 상태 반영
               git pull --rebase origin ${{ env.HELM_BRANCH }}
               attempts=$((attempts+1))
               if [ $attempts -eq $max_attempts ]; then
