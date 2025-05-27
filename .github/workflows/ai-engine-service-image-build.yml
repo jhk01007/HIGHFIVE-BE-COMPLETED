@@ -38,7 +38,8 @@ jobs:
         env:
           IMAGE_TAG: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPO_NAME }}/${{ env.SERVICE_NAME }}:${{ env.BUILD_ID }}
         run: |
-          docker build -f ./${{ env.SERVICE_NAME }}/Dockerfile -t $IMAGE_TAG .
+          cd ${{ env.SERVICE_NAME }}
+          docker build -f ./Dockerfile -t $IMAGE_TAG .
           docker push $IMAGE_TAG
 
       - name: Checkout Helm Repository
