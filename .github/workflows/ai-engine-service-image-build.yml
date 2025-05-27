@@ -30,6 +30,10 @@ jobs:
       - name: Configure Docker Authentication
         run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
 
+      - name: Build Spring Boot Application (clean build)
+        working-directory: ./${{ env.SERVICE_NAME }}
+        run: ./gradlew clean build
+
       - name: Build, tag, and push docker image to Google Artifact Registry
         env:
           IMAGE_TAG: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPO_NAME }}/${{ env.SERVICE_NAME }}:${{ env.BUILD_ID }}
