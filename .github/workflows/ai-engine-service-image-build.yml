@@ -1,7 +1,7 @@
 name: AI-Engine-Service Image Build
 
 env:
-  SERVICE_NAME: ai-engine-image-service
+  SERVICE_NAME: ai-engine-service
   BUILD_ID: ${{ github.sha }}-${{ github.run_id }}
   HELM_VALUE: ai-engine-service-chart/values.yaml
   HELM_BRANCH: main
@@ -34,7 +34,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPO_NAME }}/${{ env.SERVICE_NAME }}:${{ env.BUILD_ID }}
         run: |
-          docker build -f ./game-service/game-application/app-api/Dockerfile -t $IMAGE_TAG .
+          docker build -f ./${{ env.SERVICE_NAME }}/Dockerfile -t $IMAGE_TAG .
           docker push $IMAGE_TAG
 
       - name: Checkout Helm Repository
