@@ -1,6 +1,7 @@
 package advancedweb.project.userservice.ui.controller;
 
 import advancedweb.project.userservice.application.usecase.UserAuthUseCase;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ public class InternalAuthController {
 
     private final UserAuthUseCase userAuthUseCase;
 
+    @Hidden
     @GetMapping("/validate")
     public Boolean validateToken(@RequestHeader("Authorization") String token) {
         return userAuthUseCase.validateToken(token);
